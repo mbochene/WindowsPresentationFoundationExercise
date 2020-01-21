@@ -1,9 +1,18 @@
 ﻿<Application x:Class="CatsWpf.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:CatsWpf"
-             StartupUri="MainWindow.xaml">
+             xmlns:t="clr-namespace:CatsWpf.ViewModels"
+             xmlns:k="clr-namespace:CatsWpf.Views">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type t:CatsViewModel}">
+                <k:CatsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type t:CatViewModel}">
+                <k:CatView/>
+            </DataTemplate>
+            <!-- Dummy Style, anything you won't use goes -->
+            <Style TargetType="{x:Type Rectangle}" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

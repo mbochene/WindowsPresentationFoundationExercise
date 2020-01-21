@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="CatsWpf.Views.CatsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CatsWpf.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Content="Add" Width="40"/>
+                <Button Content="Edit" Width="40"/>
+                <Button Content="Delete"/>
+                <TextBox Height="22" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            </ToolBar>
+        </ToolBarTray>
+        <ListView x:Name="CatsListView" ItemsSource="{Binding Cats}" Margin="0,0,0,0.4" Grid.Row="1" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Breed" DisplayMemberBinding="{Binding Breed}"/>
+                    <GridViewColumn Header="Birth date" DisplayMemberBinding="{Binding Birth}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</UserControl>

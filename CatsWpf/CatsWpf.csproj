@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{968FEE83-1F54-4E9C-AEAC-3CF5CA9242D2}</ProjectGuid>
+    <ProjectGuid>{42FF3F50-3D2B-4357-8BB1-FC48B86D0EE2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>CatsWpf</RootNamespace>
     <AssemblyName>CatsWpf</AssemblyName>
@@ -37,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,18 +57,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Models\Cat.cs" />
+    <Compile Include="Models\CatsModel.cs" />
+    <Compile Include="MVVM\IViewModel.cs" />
+    <Compile Include="MVVM\IWindowService.cs" />
+    <Compile Include="MVVM\WindowService.cs" />
+    <Compile Include="ViewModels\CatsViewModel.cs" />
+    <Compile Include="ViewModels\CatViewModel.cs" />
+    <Compile Include="Views\CatsView.xaml.cs">
+      <DependentUpon>CatsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CatView.xaml.cs">
+      <DependentUpon>CatView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="Views\CatsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -94,5 +109,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,5 +13,13 @@ namespace CatsWpf
     /// </summary>
     public partial class App : Application
     {
+        public MVVM.IWindowService WindowService { get; } = new MVVM.WindowService();
+        private Models.CatsModel CatsModel { get; } = new Models.CatsModel();
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            CatsWpf.ViewModels.CatsViewModel catsViewModel = new CatsWpf.ViewModels.CatsViewModel(CatsModel);
+            WindowService.Show(catsViewModel);
+        }
     }
 }

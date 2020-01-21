@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CatsWpf
+namespace CatsWpf.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
+    /// Logika interakcji dla klasy CatsView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CatsView : UserControl
     {
-        public MainWindow()
+        public CatsView()
         {
             InitializeComponent();
         }
