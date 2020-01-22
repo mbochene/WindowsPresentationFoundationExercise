@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CatsWpf.ViewModels
 {
-    public class CatViewModel : MVVM.IViewModel
+    public class CatViewModel : MVVM.IViewModel, System.ComponentModel.IDataErrorInfo
     {
         private CatsModel CatsModel { get; }
         private Cat Cat { get; }
@@ -21,7 +21,7 @@ namespace CatsWpf.ViewModels
         public string Name { get; set; }
         public string Breed { get; set; }
         public DateTime Birth { get; set; }
-        
+
         public CatViewModel(CatsModel catsModel, Cat cat = null)
         {
             CatsModel = catsModel;
@@ -58,5 +58,26 @@ namespace CatsWpf.ViewModels
         }
 
         public void Cancel() => Close?.Invoke();
+
+        public string Error { get { return null; } }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "Id":
+                        foreach(Cat cat in CatsModel.Cats)
+                        {
+                            if (cat.Id == this.Id && cat!=Cat)
+                                return "Cat with such ID already exists!";
+                        }
+                        break;
+                }
+
+                return string.Empty;
+            }
+        }
     }
 }

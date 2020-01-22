@@ -16,7 +16,10 @@
                 <Button Content="Add" Command="{Binding Path=AddCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}"/>
                 <Button Content="Edit" Command="{Binding Path=EditCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}"/>
                 <Button Content="Delete" Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}"/>
-                <TextBox Height="22" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <TextBox Height="22" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" BorderBrush="Black" Text="{Binding FilterIdText, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Height="22" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" BorderBrush="Black" Text="{Binding FilterNameText, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Height="22" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" BorderBrush="Black" Text="{Binding FilterBreedText, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Height="22" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" BorderBrush="Black" Text="{Binding FilterBirthText, UpdateSourceTrigger=PropertyChanged}"/>
             </ToolBar>
         </ToolBarTray>
         <ListView x:Name="CatsListView" ItemsSource="{Binding Cats}" SelectedItem="{Binding SelectedCat, Mode=TwoWay}">

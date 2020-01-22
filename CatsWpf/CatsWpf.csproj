@@ -64,6 +64,8 @@
     <Compile Include="MVVM\IWindowService.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="MVVM\WindowService.cs" />
+    <Compile Include="ValidationRules\BirthNotInTheFutureRule.cs" />
+    <Compile Include="ValidationRules\TextBoxNotEmptyValidationRule.cs" />
     <Compile Include="ViewModels\CatsViewModel.cs" />
     <Compile Include="ViewModels\CatViewModel.cs" />
     <Compile Include="Views\CatsView.xaml.cs">

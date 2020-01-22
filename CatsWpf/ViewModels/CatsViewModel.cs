@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,73 @@ namespace CatsWpf.ViewModels
             }
         }
 
+        private string filterIdText = "";
+        public string FilterIdText
+        {
+            get
+            {
+                return filterIdText;
+            }
+            set
+            {
+                filterIdText = value;
+                collectionViewSource.View.Refresh();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilterIdText)));
+            }
+        }
+
+        private string filterNameText = "";
+        public string FilterNameText
+        {
+            get
+            {
+                return filterNameText;
+            }
+            set
+            {
+                filterNameText = value;
+                collectionViewSource.View.Refresh();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilterNameText)));
+            }
+        }
+
+        private string filterBreedText = "";
+        public string FilterBreedText
+        {
+            get
+            {
+                return filterBreedText;
+            }
+            set
+            {
+                filterBreedText = value;
+                collectionViewSource.View.Refresh();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilterBreedText)));
+            }
+        }
+
+        private string filterBirthText = "";
+        public string FilterBirthText
+        {
+            get
+            {
+                return filterBirthText;
+            }
+            set
+            {
+                filterBirthText = value;
+                collectionViewSource.View.Refresh();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilterBirthText)));
+            }
+        }
+
+        bool FilterCat(Cat cat)
+        {
+            return (FilterIdText.Equals("") || cat.Id == (int.Parse(FilterIdText, NumberStyles.AllowLeadingSign))) &&
+                   cat.Name.Contains(FilterNameText) && cat.Breed.Contains(FilterBreedText)
+                   && cat.Birth.ToString("dd/MM/yyyy").Contains(FilterBirthText);
+        }
+
         public CatsViewModel(CatsModel catsModel)
         {
             CatsModel = catsModel;
@@ -49,7 +117,8 @@ namespace CatsWpf.ViewModels
             {
                 Source = CatsModel.Cats
             };
-            //filtrowanie
+
+            collectionViewSource.View.Filter = (o) => FilterCat((Cat)o);
             Cats = collectionViewSource.View;
         }
 

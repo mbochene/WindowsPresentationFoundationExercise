@@ -5,21 +5,93 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CatsWpf.Views"
              xmlns:conv="clr-namespace:CatsWpf.Converters"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:valid="clr-namespace:CatsWpf.ValidationRules"
+             mc:Ignorable="d" Height="308.882" Width="366.383">
     <UserControl.Resources>
         <conv:DateToStringConverter x:Key="dateToStrConv"/>
+        <ControlTemplate x:Key="validationTemplate">
+            <StackPanel>
+                <!-- Placeholder for the TextBox itself -->
+                <AdornedElementPlaceholder x:Name="textBox"/>
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+            </StackPanel>
+        </ControlTemplate>
     </UserControl.Resources>
-    <Grid Margin="0,0,25,10">
-        <Label Content="ID" Margin="10,10,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Label Content="Name" Margin="10,41,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Label Content="Breed" Margin="10,72,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Label Content="Date of birth" Margin="10,103,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="100,13,0,0" TextWrapping="Wrap" Text="{Binding Id}" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="100,44,0,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="100,75,0,0" TextWrapping="Wrap" Text="{Binding Breed}" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="100,106,0,0" TextWrapping="Wrap" Text="{Binding Birth, Converter={StaticResource dateToStrConv}}" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Ok" Command="{Binding Path=OkCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}" HorizontalAlignment="Left" Margin="24,153,0,0" VerticalAlignment="Top" Width="76"/>
-        <Button Content="Cancel" Command="{Binding Path=CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}" HorizontalAlignment="Left" Margin="145,153,0,0" VerticalAlignment="Top" Width="75"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="161*"/>
+            <RowDefinition Height="27*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="128*"/>
+                <ColumnDefinition Width="295*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="ID" Margin="10,14,0,15" Height="44" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Name" Margin="10,15,0,14" Height="44" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="Breed" Margin="10,14,0,15" Height="44" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="Date of birth" Margin="10,15,0,15" Height="44" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16"/>
+            <TextBox x:Name="TextBoxId" Grid.Row="0" Grid.Column="1" Margin="10,16,10,18" TextWrapping="Wrap" Text="{Binding Id, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" TextAlignment="Center" Validation.ErrorTemplate="{StaticResource validationTemplate}"/>
+            <TextBox x:Name="TextBoxName" Grid.Row="1" Grid.Column="1" Margin="10,18,10,16" TextWrapping="Wrap" TextAlignment="Center" Validation.ErrorTemplate="{StaticResource validationTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Name">
+                        <Binding.ValidationRules>
+                            <valid:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True" Message="You must enter cat's name!"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox x:Name="TextBoxBreed" Grid.Row="2" Grid.Column="1" Margin="10,16,10,18" TextWrapping="Wrap" TextAlignment="Center" Validation.ErrorTemplate="{StaticResource validationTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Breed">
+                        <Binding.ValidationRules>
+                            <valid:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True" Message="You must enter cat's breed!"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox x:Name="TextBoxBirth" Grid.Row="3" Grid.Column="1" Margin="10,12,10,23" TextWrapping="Wrap" MinWidth="40" TextAlignment="Center" Validation.ErrorTemplate="{StaticResource validationTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Birth" Converter="{StaticResource dateToStrConv}">
+                        <Binding.ValidationRules>
+                            <valid:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True" Message="You must enter cat's date of birth!"/>
+                            <valid:BirthNotInTheFutureRule ValidationStep="ConvertedProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Ok" Command="{Binding Path=OkCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}" HorizontalAlignment="Center" Height="32" VerticalAlignment="Center" Width="133">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="false" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxId, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=TextBoxName, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=TextBoxBreed, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=TextBoxBirth, Path=(Validation.HasError)}" Value="false" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="true" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Column="1" Content="Cancel" Command="{Binding Path=CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}" HorizontalAlignment="Center" Height="32" VerticalAlignment="Center" Width="132"/>
+        </Grid>
     </Grid>
+
 </UserControl>
