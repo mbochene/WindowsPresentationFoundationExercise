@@ -101,8 +101,8 @@ namespace CatsWpf.ViewModels
 
         bool FilterCat(Cat cat)
         {
-            return (FilterIdText.Equals("") || cat.Id == (int.Parse(FilterIdText, NumberStyles.AllowLeadingSign))) &&
-                   cat.Name.Contains(FilterNameText) && cat.Breed.Contains(FilterBreedText)
+            return (FilterIdText.Equals("") || (int.TryParse(FilterIdText, out int id) && cat.Id == id))
+                   && cat.Name.Contains(FilterNameText) && cat.Breed.Contains(FilterBreedText)
                    && cat.Birth.ToString("dd/MM/yyyy").Contains(FilterBirthText);
         }
 
