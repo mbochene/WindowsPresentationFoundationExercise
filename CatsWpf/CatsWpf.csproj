@@ -57,10 +57,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\DateToStringConverter.cs" />
     <Compile Include="Models\Cat.cs" />
     <Compile Include="Models\CatsModel.cs" />
     <Compile Include="MVVM\IViewModel.cs" />
     <Compile Include="MVVM\IWindowService.cs" />
+    <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="MVVM\WindowService.cs" />
     <Compile Include="ViewModels\CatsViewModel.cs" />
     <Compile Include="ViewModels\CatViewModel.cs" />

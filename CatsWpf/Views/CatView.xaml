@@ -4,9 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CatsWpf.Views"
+             xmlns:conv="clr-namespace:CatsWpf.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <UserControl.Resources>
+        <conv:DateToStringConverter x:Key="dateToStrConv"/>
+    </UserControl.Resources>
+    <Grid Margin="0,0,25,10">
+        <Label Content="ID" Margin="10,10,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Content="Name" Margin="10,41,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Content="Breed" Margin="10,72,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Content="Date of birth" Margin="10,103,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="100,13,0,0" TextWrapping="Wrap" Text="{Binding Id}" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="100,44,0,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="100,75,0,0" TextWrapping="Wrap" Text="{Binding Breed}" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="100,106,0,0" TextWrapping="Wrap" Text="{Binding Birth, Converter={StaticResource dateToStrConv}}" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Ok" Command="{Binding Path=OkCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}" HorizontalAlignment="Left" Margin="24,153,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button Content="Cancel" Command="{Binding Path=CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}" HorizontalAlignment="Left" Margin="145,153,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </UserControl>
